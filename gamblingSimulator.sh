@@ -10,6 +10,36 @@ stake=100
 totalWin=0
 totalLost=0
 
+#max lucky day function
+function luckyMaxDay
+{
+local maxLucky=$1
+for (( day=1;day<=20;day++ ))
+do
+	if [[ ${winGamble[$day]} -gt $maxLucky ]]
+	then
+		maxLucky=${winGamble[$day]}
+		luckiestDay=$day
+	fi
+done
+echo $luckiestDay
+}
+
+#max unlucky day function
+function unluckyMaxDay
+{
+local maxUnlucky=$1
+for ((  day=1;day<=20;day++ ))
+do
+	if [[ ${lostGamble[$day]} -gt $maxUnlucky ]]
+	then
+		maxUnlucky=${lostGamble[$day]}
+		unluckiestDay=$day
+	fi
+done
+echo $unluckiestDay
+}
+
 for (( day=1; day<=20; day++ ))
 do
 	dayWin=0
@@ -34,7 +64,12 @@ do
 	winGamble[$day]=$dayWin
 	lostGamble[$day]=$dayLost
 done
+
 echo $stake
 echo "TotalWin: $totalWin  TotalLost: $totalLost"
 echo "Day: ${!winGamble[@]} win: ${winGamble[@]}"
 echo "Day: ${!lostGamble[@]} lost: ${lostGamble[@]}"
+luckyDay=$( luckyMaxDay ${winGamble[1]} )
+unluckyDay=$( unluckyMaxDay ${lostGamble[1]} )
+
+echo "LuckyDay : $luckyDay  UnluckyDay: $unluckyDay"
