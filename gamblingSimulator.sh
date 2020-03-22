@@ -9,7 +9,7 @@ stake=100
 win=0
 lost=0
 
-for (( game=0; game<1; game++ ))
+while(( stake<150 && stake>50 ))
 do
 	gamble=$((RANDOM%2))
 	if [[ $gamble -eq 1 ]]
